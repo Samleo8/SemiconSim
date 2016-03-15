@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/materialize.min.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+        <title>Semiconductors</title>
+    </head>
+    <body class="light-blue lighten-2">
+        <nav class="blue darken-2" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="#" class="brand-logo">H3-Sim</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#" class="waves-effect waves-dark">Link 1</a></li>
+                    <li><a href="#" class="waves-effect waves-dark">Link 2</a></li>
+                </ul>
+
+                <ul id="nav-mobile" class="side-nav orange lighten-3">
+                    <li class="orange lighten-4"><a href="#" class="waves-effect waves-light">Navbar Link</a></li>
+                </ul>
+                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+        
+        <div class="section no-pad-bot" id="index-banner">
+            <div class="card">
+                <canvas id="main_canvas" class="light-blue lighten-3 card-image">
+                    Unfortunately, your browser doesn't support canvas!
+                </canvas>
+                
+                <div id="control-panel" class="row card-content">
+                    <div class="panel-btns row">
+                        <div id="sim-run-btn" class="btn waves-effect waves-light col s8 push-s2 m6 push-m3 l4 push-l4">
+                            Run simulation
+                            <i class="material-icons right">send</i>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="section panel-sliders">
+                        <div class="col s12 m6 l4 range-container">
+                            <div class="col s9 range-field">
+                                <span>Temperature</span>
+                                <input type="range" id="temperature_range" min="0" max="1000" value="300" data-react="temperature_field"/>
+                            </div>
+                            
+                            <input id="temperature_field" type="number" min="0" max="1000" maxlength="4" class="col s3" value="300" data-react="temperature_range"/>
+                        </div>
+
+                        <div class="col s12 m6 l4 range-container">
+                            <div class="col s9 range-field">
+                                <span>Temperature</span>
+                                <input type="range" id="temperature_range" min="0" max="1000" value="300" data-react="temperature_field"/>
+                            </div>
+                            
+                            <input id="temperature_field" type="number" min="0" max="1000" maxlength="4" class="col s3" value="300" data-react="temperature_range"/>
+                        </div>
+                        
+                        <div class="col s12 m6 l4 range-container">
+                            <div class="col s9 range-field">
+                                <span>Temperature</span>
+                                <input type="range" id="temperature_range" min="0" max="1000" value="300" data-react="temperature_field"/>
+                            </div>
+                            
+                            <input id="temperature_field" type="number" min="0" max="1000" maxlength="4" class="col s3" value="300" data-react="temperature_range"/>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>    
+        </div>
+
+        <footer class="page-footer orange">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Group Bio</h5>
+                        <p class="grey-text text-lighten-4">We are a team of junior college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    Made by <span class="orange-text text-lighten-3">Samuel Leong, Li Yicheng</span> for <span class="orange-text text-lighten-3">NTU H3 Semiconductors</span>
+                </div>
+            </div>
+        </footer>
+
+
+        <!--  Scripts-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>
