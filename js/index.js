@@ -23,7 +23,7 @@ window.requestAnimFrame = (function(callback) {
     };
 })();
 
-var canvas, ctx;
+var sims = [];
 
 var app = {
     // Application Constructor
@@ -43,6 +43,13 @@ var app = {
         window.addEventListener("keyup", function (e) {
             
         }, false);
+        
+        window.addEventListener("resize", function(e){
+            for(var i=0;i<sims.length;i++){
+                sims[i].canvasResize();
+                sims[i].render();
+            }
+        },false);
         
         $('.range-container input[type=range]').each(
             function(index, element){                
@@ -66,8 +73,9 @@ var app = {
                  
         //Start stuff
         canvas = document.getElementById("main_canvas");
-        var sim1 = new Sim(canvas);
-        sim1.start();
+
+        sims[0] = new Sim(canvas);
+        sims[0].start();
     }
 };
 
@@ -85,6 +93,7 @@ function Sim(_canvas,_args){
     }
     
     this.start = function(){
+        self.canvasResize();
         self.render();    
     };
     
@@ -97,6 +106,14 @@ function Sim(_canvas,_args){
     this.tick = function(){
         self.render();
     };
+    
+    this.canvasResize = function(_width,_height){
+        if(_width==null) _width = window.innerWidth;
+        if(_height==null) _height = 400;
+        
+        this.ctx.canvas.width  = _width;
+        this.ctx.canvas.height = _height;
+    }
 }
 
 function Particle(_type,_x,_y,_ctx,_args){
