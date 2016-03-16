@@ -50,6 +50,11 @@ html, body {
     margin-top:5px;
     margin-bottom: -6px;
 }
+    
+.panel-btns{
+    padding-top: 1px;
+    height: 40px;
+}
 
 /*
 #control-panel .panel-btns{
