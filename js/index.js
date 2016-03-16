@@ -93,14 +93,19 @@ function Sim(_canvas,_args){
     }
     
     this.start = function(){
+        var p1 = new Particle(1,10,10,self.ctx);
+        self.particleArray.push(p1);
+        
         self.canvasResize();
         self.render();    
     };
     
     this.render = function(){
         //Render particles
-        var p1 = new Particle(1,10,10,self.ctx);
-        p1.draw();
+        for(var i=0;i<self.particleArray.length;i++){
+            var pars = self.particleArray;
+            pars[i].draw();
+        }
     };
     
     this.tick = function(){
@@ -130,7 +135,7 @@ function Particle(_type,_x,_y,_ctx,_args){
     this.args = _args;
     this.ctx = _ctx;
     
-    this.radius = 2;
+    this.radius = 3;
     
     this.speed = {x:0,y:0,z:0};
     this.acc = {x:0,y:0,z:0};
@@ -146,6 +151,11 @@ function Particle(_type,_x,_y,_ctx,_args){
         
         ctxx.beginPath();
         ctxx.arc(self.x,self.y,self.radius,0,2*Math.PI);
+        if(self.type==1){ //must fill circle, thus draw successive arcs
+            for(var r=1;r<self.radius;r++){
+               ctxx.arc(self.x,self.y,r,0,2*Math.PI);
+            }
+        }
         ctxx.stroke();
     }
     
