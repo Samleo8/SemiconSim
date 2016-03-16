@@ -94,7 +94,7 @@ function Sim(_canvas,_args){
     };
 }
 
-var particle = function(_type,_x,_y,_args){
+var particle = function(_type,_x,_y,_ctx,_args){
     /* Obstacles
      * 0: Hole
      * 1: Electron
@@ -106,6 +106,9 @@ var particle = function(_type,_x,_y,_args){
     this.x = _x;
     this.y = _y;
     this.args = _args;
+    this.ctx = _ctx;
+    
+    this.radius = 2;
     
     this.speed = {x:0,y:0,z:0};
     this.acc = {x:0,y:0,z:0};
@@ -113,8 +116,10 @@ var particle = function(_type,_x,_y,_args){
     this.destroyed = false;
     
     this.draw = function(){
-        context.beginPath();
-        context.rect(myRectangle.x, myRectangle.y, myRectangle.width, myRectangle.height);
+        var ctxx = self.ctx;
+        
+        ctxx.beginPath();
+        ctxx.arc(self.x,self.y,);
         context.fillStyle = '#8ED6FF';
         context.fill();
         context.lineWidth = myRectangle.borderWidth;
