@@ -67,34 +67,39 @@ var app = {
         //Start stuff
         canvas = document.getElementById("main_canvas");
         var sim1 = new Sim(canvas);
+        sim1.start();
     }
 };
 
 //Functions for drawing
 function Sim(_canvas,_args){
+    var self = this;
+    
     this.canvas = _canvas;
     this.ctx = _canvas.getContext("2d");
+    
+    this.particleArray = [];
     
     if(_args!=null){
         //whatever args to throw here    
     }
     
     this.start = function(){
-        
+        self.render();    
     };
     
     this.render = function(){
         //Render particles
-        
-        
+        var p1 = new Particle(1,10,10,self.ctx);
+        p1.draw();
     };
     
     this.tick = function(){
-        
+        self.render();
     };
 }
 
-var particle = function(_type,_x,_y,_ctx,_args){
+function Particle(_type,_x,_y,_ctx,_args){
     /* Obstacles
      * 0: Hole
      * 1: Electron
@@ -115,16 +120,16 @@ var particle = function(_type,_x,_y,_ctx,_args){
     
     this.destroyed = false;
     
-    this.draw = function(){
+    this.draw = function(_args){
         var ctxx = self.ctx;
         
+        if(_args!=null){
+                
+        }
+        
         ctxx.beginPath();
-        ctxx.arc(self.x,self.y,);
-        context.fillStyle = '#8ED6FF';
-        context.fill();
-        context.lineWidth = myRectangle.borderWidth;
-        context.strokeStyle = 'black';
-        context.stroke();    
+        ctxx.arc(self.x,self.y,self.radius,0,2*Math.PI);
+        ctxx.stroke();
     }
     
     this.destroy = function(){
