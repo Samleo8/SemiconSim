@@ -86,6 +86,8 @@ function Sim(_canvas,_args){
     this.canvas = _canvas;
     this.ctx = _canvas.getContext("2d");
     
+    this.paused = false;
+    
     this.particleArray = [];
     
     if(_args!=null){
@@ -97,10 +99,12 @@ function Sim(_canvas,_args){
         self.particleArray.push(p1);
         
         self.canvasResize();
-        self.render();    
+        self.tick();    
     };
     
     this.render = function(){
+        self.ctx.clear();
+        
         //Render particles
         for(var i=0;i<self.particleArray.length;i++){
             var pars = self.particleArray;
@@ -110,6 +114,10 @@ function Sim(_canvas,_args){
     
     this.tick = function(){
         self.render();
+        
+        self.particleArray[0].y += 10;
+        
+        if(!this.paused) requestAnimFrame(self.tick);
     };
     
     this.canvasResize = function(_width,_height){
@@ -118,6 +126,14 @@ function Sim(_canvas,_args){
         
         this.ctx.canvas.width  = _width;
         this.ctx.canvas.height = _height;
+    }
+    
+    this.play = function(){
+        this.paused = false;   
+    }
+    
+    this.pause = function(){
+        this.paused = true;
     }
 }
 
@@ -198,7 +214,7 @@ CanvasRenderingContext2D.prototype.clear = function(_startx,_starty,_endx,_endy)
     if(_endx==null) _endx = canvas.width;
     if(_endy==null) _endy = canvas.height;
     
-    context.clearRect(_startx, _starty, _endx, _endy);
+    this.clearRect(_startx, _starty, _endx, _endy);
 }
 
 function rand(lw,hg){
