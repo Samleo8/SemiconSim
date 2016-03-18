@@ -23,7 +23,7 @@ window.requestAnimFrame = (function(callback) {
     };
 })();
 
-var sims = [];
+var sims = {};
 
 var app = {
     // Application Constructor
@@ -74,8 +74,17 @@ var app = {
         //Start stuff
         canvas = document.getElementById("main_canvas");
 
-        sims[0] = new Sim(canvas);
-        sims[0].start();
+        sims["main_canvas"] = new Sim(canvas);
+        sims["main_canvas"].start();
+        
+        $(".sim-run-btn").each(
+            function(index, ele){                
+                var sim_id = ele.data("canvas").toString();
+                
+                ele.addEventListener("click",function(){
+                    sims[sim_id];
+                },false);
+        });
     }
 };
 
