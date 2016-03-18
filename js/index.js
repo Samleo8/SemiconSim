@@ -75,14 +75,32 @@ var app = {
         canvas = document.getElementById("main_canvas");
 
         sims["main_canvas"] = new Sim(canvas);
-        sims["main_canvas"].start();
+        //sims["main_canvas"].start();
         
         $(".sim-run-btn").each(
             function(index, ele){                
-                var sim_id = ele.data("canvas").toString();
+                var sim_id = $(ele).data("canvas").toString();
                 
                 ele.addEventListener("click",function(){
-                    sims[sim_id];
+                    sims[sim_id].play();
+                },false);
+        });
+        
+        $(".sim-pause-btn").each(
+            function(index, ele){                
+                var sim_id = $(ele).data("canvas").toString();
+                
+                ele.addEventListener("click",function(){
+                    sims[sim_id].pause();
+                },false);
+        });
+        
+        $(".sim-stop-btn").each(
+            function(index, ele){                
+                var sim_id = $(ele).data("canvas").toString();
+                
+                ele.addEventListener("click",function(){
+                    sims[sim_id].reset();
                 },false);
         });
     }
@@ -95,6 +113,7 @@ function Sim(_canvas,_args){
     this.canvas = _canvas;
     this.ctx = _canvas.getContext("2d");
     
+    this.started = false;
     this.paused = false;
     
     this.particleArray = [];
@@ -104,11 +123,15 @@ function Sim(_canvas,_args){
     }
     
     this.start = function(){
+        this.reset();
+        
         var p1 = new Particle(1,10,10,self.ctx);
         self.particleArray.push(p1);
         
         self.canvasResize();
         self.tick();    
+        
+        self.started = true;
     };
     
     this.render = function(){
@@ -118,13 +141,18 @@ function Sim(_canvas,_args){
         for(var i=0;i<self.particleArray.length;i++){
             var pars = self.particleArray;
             pars[i].draw();
+            
+            if(pars[i].x<0 || pars[i].x>self.ctx.canvas.width || pars[i].y<0 || pars[i].y>self.ctx.canvas.height){
+                pars[i].destroy();
+                delete pars[i];
+            }
         }
     };
     
     this.tick = function(){
         self.render();
         
-        self.particleArray[0].y += 10;
+        if(self.particleArray[0]) self.particleArray[0].y += 0.1;
         
         if(!this.paused) requestAnimFrame(self.tick);
     };
@@ -138,11 +166,27 @@ function Sim(_canvas,_args){
     }
     
     this.play = function(){
+        if(!this.started) this.start();
         this.paused = false;   
     }
     
     this.pause = function(){
         this.paused = true;
+    }
+    
+    this.reset = function(){
+        self.particleArray = [];
+        
+        //Reset things
+        for(var i=0;i<self.particleArray.length;i++){
+            var pars = self.particleArray;
+            pars[i].destroy();
+        }
+        
+        self.started = false;
+        self.paused = false;
+
+        self.particleArray = [];
     }
 }
 
