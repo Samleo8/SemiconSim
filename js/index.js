@@ -125,8 +125,8 @@ function Sim(_canvas,_args){
     this.start = function(){
         self.reset();
         
-        for(var n=-5;n<5;n++){
-            self.particleArray.push(new Particle(1,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.1*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
+        for(var n=-10;n<10;n++){
+            self.particleArray.push(new Particle(Math.abs(n)%2,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.2*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
         }
         
         self.tick();    
