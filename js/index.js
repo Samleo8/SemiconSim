@@ -127,7 +127,7 @@ function Sim(_canvas,_args){
         
         var n=10; 
         while(n--){
-            self.particleArray.push(new Particle(1,10+n*10,10,self.ctx,{speed:{x:0,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
+            self.particleArray.push(new Particle(1,10+n*10,10,self.ctx,{speed:{x:0.1*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
         }
         
         self.canvasResize();
