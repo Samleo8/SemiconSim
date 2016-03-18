@@ -125,8 +125,10 @@ function Sim(_canvas,_args){
     this.start = function(){
         this.reset();
         
-        var p1 = new Particle(1,10,10,self.ctx);
-        self.particleArray.push(p1);
+        var n=10; 
+        while(n--){
+            self.particleArray.push(new Particle(1,10+n*10,10,self.ctx,{speed:{x:0,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
+        }
         
         self.canvasResize();
         self.tick();    
@@ -143,11 +145,6 @@ function Sim(_canvas,_args){
         for(var i=0;i<self.particleArray.length;i++){
             var pars = self.particleArray;
             pars[i].draw();
-            
-            if(pars[i].x<0 || pars[i].x>self.ctx.canvas.width || pars[i].y<0 || pars[i].y>self.ctx.canvas.height){
-                pars[i].destroy();
-                delete pars[i];
-            }
         }
     };
     
@@ -156,8 +153,32 @@ function Sim(_canvas,_args){
         
         self.render();
         
-        if(self.particleArray[0]) self.particleArray[0].y += 0.1;
-        
+        for(var i=0;i<self.particleArray.length;i++){
+            var pars = self.particleArray;
+            pars[i].x += pars[i].speed.x;
+            pars[i].y += pars[i].speed.y;
+            pars[i].z += pars[i].speed.z;
+            
+            pars[i].speed.x += pars[i].acc.x;
+            pars[i].speed.y += pars[i].acc.y;
+            pars[i].speed.z += pars[i].acc.z;
+            
+            if(pars[i].x<0 || pars[i].x>self.ctx.canvas.width || pars[i].y<0 || pars[i].y>self.ctx.canvas.height){
+                pars[i].destroy();
+                pars.splice(i, 1);
+                i--;
+            }
+        }
+        /*
+        for(var i in self.particleArray){
+            var pars = self.particleArray;     
+            
+            if(pars.hasOwnProperty(i)) continue;
+              
+            if(pars[i].destroyed) delete pars[i];
+        }
+        //*/
+         
         if(!this.paused) requestAnimFrame(self.tick);
     };
     
@@ -180,6 +201,8 @@ function Sim(_canvas,_args){
     }
     
     this.reset = function(){
+        this.ctx.clear();
+        
         self.particleArray = [];
         
         //Reset things
@@ -205,7 +228,8 @@ function Particle(_type,_x,_y,_ctx,_args){
     
     this.type = _type;
     this.x = _x;
-    this.y = _y;
+    this.y = _y ;
+    this.z = 0;
     this.args = _args;
     this.ctx = _ctx;
     
@@ -213,6 +237,20 @@ function Particle(_type,_x,_y,_ctx,_args){
     
     this.speed = {x:0,y:0,z:0};
     this.acc = {x:0,y:0,z:0};
+    
+    if(_args!=null){
+        if(_args["speed"]!=null){
+            this.speed = _args["speed"];   
+        }
+        
+        if(_args["acc"]!=null){
+            this.acc = _args["acc"];   
+        }
+        
+        if(_args["speed"]!=null){
+            this.speed = _args["speed"];   
+        }
+    }
     
     this.destroyed = false;
     
