@@ -123,20 +123,19 @@ function Sim(_canvas,_args){
     }
     
     this.start = function(){
-        this.reset();
-    
+        self.reset();
+        
         for(var n=-5;n<5;n++){
             self.particleArray.push(new Particle(1,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.1*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
         }
         
-        self.canvasResize();
         self.tick();    
         
         self.started = true;
     };
     
     this.render = function(){
-        if(self.paused) return;
+        if(self.paused || !self.started) return;
         
         self.ctx.clear();
         
@@ -148,7 +147,7 @@ function Sim(_canvas,_args){
     };
     
     this.tick = function(){
-        if(self.paused) return;
+        if(self.paused || !self.started) return;
         
         self.render();
         
@@ -200,7 +199,11 @@ function Sim(_canvas,_args){
     }
     
     this.reset = function(){
-        this.ctx.clear();
+        self.paused = false;
+        self.started = false;
+        
+        self.ctx.clear();
+        self.canvasResize();
         
         self.particleArray = [];
         
@@ -209,9 +212,6 @@ function Sim(_canvas,_args){
             var pars = self.particleArray;
             pars[i].destroy();
         }
-        
-        self.started = false;
-        self.paused = false;
 
         self.particleArray = [];
     }
