@@ -135,6 +135,8 @@ function Sim(_canvas,_args){
     };
     
     this.render = function(){
+        if(self.paused) return;
+        
         self.ctx.clear();
         
         //Render particles
@@ -150,6 +152,8 @@ function Sim(_canvas,_args){
     };
     
     this.tick = function(){
+        if(self.paused) return;
+        
         self.render();
         
         if(self.particleArray[0]) self.particleArray[0].y += 0.1;
@@ -166,12 +170,13 @@ function Sim(_canvas,_args){
     }
     
     this.play = function(){
-        if(!this.started) this.start();
-        this.paused = false;   
+        if(!self.started) self.start();
+        self.paused = false;   
+        self.tick();
     }
     
     this.pause = function(){
-        this.paused = true;
+        self.paused = true;
     }
     
     this.reset = function(){
