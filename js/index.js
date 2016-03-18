@@ -117,6 +117,7 @@ function Sim(_canvas,_args){
     this.paused = false;
     
     this.particleArray = [];
+    this.paricleMap = {}; //"x,y,z":[Particle,Particle]
     
     if(_args!=null){
         //whatever args to throw here    
@@ -125,9 +126,11 @@ function Sim(_canvas,_args){
     this.start = function(){
         self.reset();
         
-        for(var n=-10;n<10;n++){
+        for(var n=-10;n<=10;n++){
             self.particleArray.push(new Particle(Math.abs(n)%2,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.2*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
         }
+        n=10;
+        self.particleArray.push(new Particle(Math.abs(n)%2,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.2*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
         
         self.tick();    
         
@@ -150,23 +153,47 @@ function Sim(_canvas,_args){
         if(self.paused || !self.started) return;
         
         self.render();
+    
+        console.log("help.");
+        self.particleMap = {}; //reset all coords
+        self.paricleMap["penguins"] = 2;
+        console.log(self.particleMap);
         
         for(var i=0;i<self.particleArray.length;i++){
             var pars = self.particleArray;
-            pars[i].x += pars[i].speed.x;
-            pars[i].y += pars[i].speed.y;
-            pars[i].z += pars[i].speed.z;
+            var maps = self.particleMap;
             
-            pars[i].speed.x += pars[i].acc.x;
-            pars[i].speed.y += pars[i].acc.y;
-            pars[i].speed.z += pars[i].acc.z;
-            
+            //Check for out of bounds
             if(pars[i].x<0 || pars[i].x>self.ctx.canvas.width || pars[i].y<0 || pars[i].y>self.ctx.canvas.height){
                 pars[i].destroy();
                 pars.splice(i, 1);
                 i--;
+                continue;
             }
+            
+            //Check for e- & hole collisions by adding to x,y,z map (more efficient)
+            var coord = pars[i].x+"_"+pars[i].y+"_"+pars[i].z;
+            console.log(coord);
+            
+            self.paricleMap["pandas"] = 2;
+            //if(self.paricleMap[coord]==null) self.paricleMap[coord] = new Array();
+            
+            //self.paricleMap[coord].push(pars[i]);
+            
+            //Move particle
+            pars[i].x += pars[i].speed.x;
+            pars[i].y += pars[i].speed.y;
+            pars[i].z += pars[i].speed.z;
+            
+            //Accelerate particle
+            pars[i].speed.x += pars[i].acc.x;
+            pars[i].speed.y += pars[i].acc.y;
+            pars[i].speed.z += pars[i].acc.z;
         }
+        
+        
+        console.log(self.particleMap);
+        self.paused = true;
         /*
         for(var i in self.particleArray){
             var pars = self.particleArray;     
@@ -177,7 +204,7 @@ function Sim(_canvas,_args){
         }
         //*/
          
-        if(!this.paused) requestAnimFrame(self.tick);
+        if(!self.paused) requestAnimFrame(self.tick);
     };
     
     this.canvasResize = function(_width,_height){
