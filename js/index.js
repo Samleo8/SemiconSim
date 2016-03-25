@@ -135,9 +135,9 @@ function Sim(_canvas,_args){
 		
 		//*
 		//Testing collisions
-        self.particleArray.push(new Particle(1,self.ctx.canvas.width/2,10,self.ctx,{speed:{x:0,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
+        self.particleArray.push(new Particle(1,self.ctx.canvas.width/2,10,self.ctx,{speed:{x:0,y:0,z:0},acc:{x:0,y:0.1,z:0}}));
 		
-		self.particleArray.push(new Particle(0,self.ctx.canvas.width/2,self.ctx.canvas.height-10,self.ctx,{speed:{x:0,y:0,z:0},acc:{x:0,y:-0.0981,z:0}}));
+		self.particleArray.push(new Particle(0,self.ctx.canvas.width/2,self.ctx.canvas.height-10,self.ctx,{speed:{x:0,y:0,z:0},acc:{x:0,y:-0.1,z:0}}));
         //*/
 		
         self.tick();    
@@ -201,7 +201,9 @@ function Sim(_canvas,_args){
             pars[i].speed.y += pars[i].acc.y;
             pars[i].speed.z += pars[i].acc.z;
         }
-        
+		
+        console.log(parm);
+		
 		//Loop through particleMap to check for collisions
         for(var coord in parm){
             if(parm.hasOwnProperty(coord)) continue;
