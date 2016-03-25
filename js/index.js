@@ -129,8 +129,9 @@ function Sim(_canvas,_args){
         for(var n=-10;n<=10;n++){
             self.particleArray.push(new Particle(Math.abs(n)%2,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.2*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
         }
+		
         n=10;
-        self.particleArray.push(new Particle(Math.abs(n)%2,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.2*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
+        self.particleArray.push(new Particle(Math.abs(n+1)%2,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.2*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
         
         self.tick();    
         
@@ -142,9 +143,10 @@ function Sim(_canvas,_args){
         
         self.ctx.clear();
         
+		var pars = self.particleArray;            
         //Render particles
         for(var i=0;i<self.particleArray.length;i++){
-            var pars = self.particleArray;
+
             pars[i].draw();
         }
     };
@@ -154,15 +156,11 @@ function Sim(_canvas,_args){
         
         self.render();
     
-        console.log("help.");
-        self.particleMap = {}; //reset all coords
-        self.paricleMap["penguins"] = 2;
-        console.log(self.particleMap);
-        
+		var pars = self.particleArray;
+		var parm = self.particleMap; //set var parm as self.particleMap because self.particleMap cannot be properly modified via loop for some reason
+        parm = {}; //reset all coords
+		
         for(var i=0;i<self.particleArray.length;i++){
-            var pars = self.particleArray;
-            var maps = self.particleMap;
-            
             //Check for out of bounds
             if(pars[i].x<0 || pars[i].x>self.ctx.canvas.width || pars[i].y<0 || pars[i].y>self.ctx.canvas.height){
                 pars[i].destroy();
@@ -173,13 +171,19 @@ function Sim(_canvas,_args){
             
             //Check for e- & hole collisions by adding to x,y,z map (more efficient)
             var coord = pars[i].x+"_"+pars[i].y+"_"+pars[i].z;
-            console.log(coord);
+
+            if(parm[coord]==null){
+				parm[coord] = {"holes":[],"electrons":[]};
+			}
             
-            self.paricleMap["pandas"] = 2;
-            //if(self.paricleMap[coord]==null) self.paricleMap[coord] = new Array();
-            
-            //self.paricleMap[coord].push(pars[i]);
-            
+			//Separate into holes and electrons
+			if(pars[i].type){
+				parm[coord]["electrons"].push({"particle":pars[i],"index":i});
+			}
+			else{
+				parm[coord]["holes"].push({"particle":pars[i],"index":i});
+			}
+			
             //Move particle
             pars[i].x += pars[i].speed.x;
             pars[i].y += pars[i].speed.y;
@@ -191,9 +195,27 @@ function Sim(_canvas,_args){
             pars[i].speed.z += pars[i].acc.z;
         }
         
-        
-        console.log(self.particleMap);
-        self.paused = true;
+		//Loop through particleMap to check for collisions
+        for(var coord in parm){
+            if(parm.hasOwnProperty(coord)) continue;
+            
+			if(parm[coord]["holes"].length>=1 && parm[coord]["electrons"].length>=1){ //Collision detected
+				console.log("Oh no! A collision at "+coord.toString());
+				
+				var parHoles = parm[coord]["holes"];
+				var parEle = parm[coord]["electrons"];
+				
+				//if excess holes/electrons colliding, excess holes/electrons still pass
+				for(var j=Math.min(parHoles["holes"].length,parEle.length)-1;j>=0;j--){ 
+					//loop from back to allow for proper splicing
+					
+					parHoles[j]["particle"].destroy();
+					pars.splice(parHoles[j]["index"],1); //Remove from particleArray
+				}
+				//TODO: Make only those with similar speeds/energies annihilate each other
+			}
+        }
+		
         /*
         for(var i in self.particleArray){
             var pars = self.particleArray;     
