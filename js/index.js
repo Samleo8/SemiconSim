@@ -126,13 +126,20 @@ function Sim(_canvas,_args){
     this.start = function(){
         self.reset();
         
+		/*
+		//Just cool animation, with speed and acceleration for particles
         for(var n=-10;n<=10;n++){
             self.particleArray.push(new Particle(Math.abs(n)%2,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.2*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
         }
+		//*/
 		
-        n=10;
-        self.particleArray.push(new Particle(Math.abs(n+1)%2,self.ctx.canvas.width/2+n*10,10,self.ctx,{speed:{x:0.2*n,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
-        
+		//*
+		//Testing collisions
+        self.particleArray.push(new Particle(1,self.ctx.canvas.width/2,10,self.ctx,{speed:{x:0,y:0,z:0},acc:{x:0,y:0.0981,z:0}}));
+		
+		self.particleArray.push(new Particle(0,self.ctx.canvas.width/2,self.ctx.canvas.height-10,self.ctx,{speed:{x:0,y:0,z:0},acc:{x:0,y:-0.0981,z:0}}));
+        //*/
+		
         self.tick();    
         
         self.started = true;
@@ -215,6 +222,8 @@ function Sim(_canvas,_args){
 				//TODO: Make only those with similar speeds/energies annihilate each other
 			}
         }
+		
+		//self.paused = true;
 		
         /*
         for(var i in self.particleArray){
