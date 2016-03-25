@@ -215,11 +215,14 @@ function Sim(_canvas,_args){
 				var parEle = parm[coord]["electrons"];
 				
 				//if excess holes/electrons colliding, excess holes/electrons still pass
-				for(var j=Math.min(parHoles["holes"].length,parEle.length)-1;j>=0;j--){ 
+				for(var j=Math.min(parHoles.length,parEle.length)-1;j>=0;j--){ 
 					//loop from back to allow for proper splicing
 					
 					parHoles[j]["particle"].destroy();
 					pars.splice(parHoles[j]["index"],1); //Remove from particleArray
+					
+					parEle[j]["particle"].destroy();
+					pars.splice(parEle[j]["index"],1); //Remove from particleArray
 				}
 				//TODO: Make only those with similar speeds/energies annihilate each other
 			}
