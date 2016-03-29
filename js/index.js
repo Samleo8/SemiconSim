@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -291,6 +292,16 @@ function Sim(_canvas,_args){
 
         self.particleArray = [];
     }
+}
+
+function Band(_type, _energyLevel, _gradient){
+    /* Band Types
+     * 0: valence band top
+     * 1: conduction band top
+    //*/
+    this.type = _type;
+    this.gradient = _gradient;
+    this.energyLevel = _energyLevel;
 }
 
 function Particle(_type,_x,_y,_ctx,_args){
