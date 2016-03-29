@@ -45,7 +45,7 @@ var app = {
         });
 
         $(window).resize(function(e){
-            for(var i=0;i<sims.length;i++){
+            for(var i = 0; i < sims.length; i++){
                 sims[i].canvasResize();
                 sims[i].render();
             }
