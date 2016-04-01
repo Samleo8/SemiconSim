@@ -294,37 +294,43 @@ function Sim(_canvas,_args){
     }
 }
 
-function BandDiagram(_type, _energyLevel, _gradient, _args){
+function BandDiagram(_type, _ctx, _bounds, _particles, _args){
     /* Band Types
-     * 0: Simple
-     * 1: conduction band top
+     * 0: Simple - 2 straight/slanted bands only
+     * 1: Complex - PN-Junction
+     * 2: Complex - Schottky
+     * 3: Complex - Metal Contact
     //*/
     
-    this.type = _type;
-    this.gradient = _gradient;
-    this.energyLevel = _energyLevel;
+    /* Bounds Object
+     * {
+           startX, startY, endX, endY
+     * }
+    //*/
     
-    this.startX = 0;
-    this.startY = 0;
-    this.endX = 0;
-    this.endY = 0;
+    var self = this;
+    
+    this.type = _type;
+    this.ctx = _ctx;
+    
+    this.bounds = _bounds;
+    this.particles = _particles; //array of particles
+    
+    this.bandgap = 1.12; //eV
+    this.gradient = [0]; //push to array for different sections 
     
     if(_args!=null){
-        if(_args["startX"]!=null){
-            this.startX = _args["startX"];
+        if(_args["gradient"]!=null){
+            this.gradient = _args["gradient"];
         }
-        if(_args["startY"]!=null){
-            this.startY = _args["startY"];
-        }
-        if(_args["endX"]!=null){
-            this.endX = _args["endX"];
-        }
-        if(_args["endY"]!=null){
-            this.endY = _args["endY"];
+        if(_args["bandgap"]!=null){
+            this.bandgap = 
         }
     }
     
+    if(this.type == 0){ //Simple, 2 straight/slanted bands
         
+    }
 }
 
 function Particle(_type,_x,_y,_ctx,_args){
