@@ -294,11 +294,12 @@ function Sim(_canvas,_args){
     }
 }
 
-function Band(_type, _energyLevel, _gradient, _args){
+function BandDiagram(_type, _energyLevel, _gradient, _args){
     /* Band Types
-     * 0: valence band top
+     * 0: Simple
      * 1: conduction band top
     //*/
+    
     this.type = _type;
     this.gradient = _gradient;
     this.energyLevel = _energyLevel;
@@ -308,8 +309,22 @@ function Band(_type, _energyLevel, _gradient, _args){
     this.endX = 0;
     this.endY = 0;
     
-    if(this._args!=null)
+    if(_args!=null){
+        if(_args["startX"]!=null){
+            this.startX = _args["startX"];
+        }
+        if(_args["startY"]!=null){
+            this.startY = _args["startY"];
+        }
+        if(_args["endX"]!=null){
+            this.endX = _args["endX"];
+        }
+        if(_args["endY"]!=null){
+            this.endY = _args["endY"];
+        }
+    }
     
+        
 }
 
 function Particle(_type,_x,_y,_ctx,_args){
