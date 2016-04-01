@@ -238,21 +238,12 @@ function Sim(_canvas, _args) {
 
                     parHoles[j]["particle"].destroy();
                     pars.splice(parHoles[j]["index"], 1); //Remove from particleArray
-
-<<<<<<< HEAD
-					parEle[j]["particle"].destroy();
-					pars.splice(parEle[j]["index"], 1); //Remove from particleArray
-				}
-				//TODO: Make only those with similar speeds/energies annihilate each other
-				//TODO: Make 
-			}
-=======
+                    
                     parEle[j]["particle"].destroy();
                     pars.splice(parEle[j]["index"], 1); //Remove from particleArray
                 }
                 //TODO: Make only those with similar speeds/energies annihilate each other
             }
->>>>>>> 2fe802f9fa966776fae3885052b5a3f10264bd5e
         }
 
         //self.paused = true;
@@ -311,8 +302,7 @@ function Sim(_canvas, _args) {
     }
 }
 
-<<<<<<< HEAD
-function BandDiagram(_type, _ctx, _bounds, _particles, _args){
+function BandDiagram(_type, _ctx, _bounds, _particles, _args) {
     /* Band Types
      * 0: Simple - 2 straight/slanted bands only
      * 1: Complex - PN-Junction
@@ -345,18 +335,20 @@ function BandDiagram(_type, _ctx, _bounds, _particles, _args){
             this.bandgap = 
         }
     }
-    
-    if(this.type == 0){ //Simple, 2 straight/slanted bands
-    
-    }
         
     this.draw = function(_args)
     {
         var ctxx = self.ctx;
+        
+        
+        if(this.type == 0){ //Simple, 2 straight/slanted bands
+
+        }
+        
         ctxx.moveTo(0, 200);
         ctxx.lineTo(1000,200);
         ctxx.stroke();
-    };
+    }
 }
 
 function Particle(_type, _x, _y, _ctx, _args) {
