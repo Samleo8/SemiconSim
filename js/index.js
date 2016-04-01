@@ -225,6 +225,7 @@ function Sim(_canvas,_args){
 					pars.splice(parEle[j]["index"],1); //Remove from particleArray
 				}
 				//TODO: Make only those with similar speeds/energies annihilate each other
+				//TODO: Make 
 			}
         }
 		
