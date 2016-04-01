@@ -294,7 +294,7 @@ function Sim(_canvas,_args){
     }
 }
 
-function Band(_type, _energyLevel, _gradient){
+function Band(_type, _energyLevel, _gradient, _args){
     /* Band Types
      * 0: valence band top
      * 1: conduction band top
@@ -302,6 +302,14 @@ function Band(_type, _energyLevel, _gradient){
     this.type = _type;
     this.gradient = _gradient;
     this.energyLevel = _energyLevel;
+    
+    this.startX = 0;
+    this.startY = 0;
+    this.endX = 0;
+    this.endY = 0;
+    
+    if(this._args!=null)
+    
 }
 
 function Particle(_type,_x,_y,_ctx,_args){
