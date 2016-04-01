@@ -238,11 +238,7 @@ function Sim(_canvas, _args) {
 
                     parHoles[j]["particle"].destroy();
                     pars.splice(parHoles[j]["index"], 1); //Remove from particleArray
-<<<<<<< HEAD
-                    
-=======
 
->>>>>>> 3ddaf971fdb651fb6005afc573f04246a0d97254
                     parEle[j]["particle"].destroy();
                     pars.splice(parEle[j]["index"], 1); //Remove from particleArray
                 }
@@ -306,11 +302,7 @@ function Sim(_canvas, _args) {
     }
 }
 
-<<<<<<< HEAD
 function BandDiagram(_type, _ctx, _bounds, _particles, _args) {
-=======
-function BandDiagram(_type, _ctx, _bounds, _particles, _args){
->>>>>>> 3ddaf971fdb651fb6005afc573f04246a0d97254
     /* Band Types
      * 0: Simple - 2 straight/slanted bands only
      * 1: Complex - PN-Junction
@@ -348,25 +340,17 @@ function BandDiagram(_type, _ctx, _bounds, _particles, _args){
     {
         var ctxx = self.ctx;
         
-<<<<<<< HEAD
-        
-        if(this.type == 0){ //Simple, 2 straight/slanted bands
+        if(this.type == 0){
+            //draw first Ec line
+            ctxx.moveTo(self.bounds.startX, self.bounds.startY-10);
+            ctxx.lineTo(self.bounds.endX, self.bounds.startY-10);
+            ctxx.stroke();
 
+            //draw second Ev line
+            ctxx.moveTo(self.bounds.startX, self.bounds.startY-10);
+            ctxx.lineTo(self.bounds.endX, self.bounds.startY-10);
+            ctxx.stroke();   
         }
-        
-        ctxx.moveTo(0, 200);
-        ctxx.lineTo(1000,200);
-=======
-        //draw first Ec line
-        ctxx.moveTo(self.bounds.startX, self.bounds.startY-10);
-        ctxx.lineTo(self.bounds.endX, self.bounds.startY-10);
-        ctxx.stroke();
-        
-        //draw second Ev line
-        ctxx.moveTo(self.bounds.startX, self.bounds.startY-10);
-        ctxx.lineTo(self.bounds.endX, self.bounds.startY-10);
->>>>>>> 3ddaf971fdb651fb6005afc573f04246a0d97254
-        ctxx.stroke();
     }
 }
 
