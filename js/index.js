@@ -343,8 +343,15 @@ function BandDiagram(_type, _ctx, _bounds, _particles, _args){
     this.draw = function(_args)
     {
         var ctxx = self.ctx;
-        ctxx.moveTo(0, 200);
-        ctxx.lineTo(1000,200);
+        
+        //draw first Ec line
+        ctxx.moveTo(self.bounds.startX, self.bounds.startY-10);
+        ctxx.lineTo(self.bounds.endX, self.bounds.startY-10);
+        ctxx.stroke();
+        
+        //draw second Ev line
+        ctxx.moveTo(self.bounds.startX, self.bounds.startY-10);
+        ctxx.lineTo(self.bounds.endX, self.bounds.startY-10);
         ctxx.stroke();
     };
 }
